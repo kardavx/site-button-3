@@ -13,6 +13,7 @@ export default {
       top: "50%",
       left: "50%",
       visible: true,
+      started: false,
       count: 0,
       Timeout: null
     }
@@ -26,6 +27,7 @@ export default {
   },
   methods: {
     TimeOutHandler() {
+      if (!this.started) {return;}
       if (this.Timeout != null) {
         return
       }
@@ -33,9 +35,14 @@ export default {
       this.Timeout = setTimeout(this.ButHover, RandomTime * 100);
     },
     ClickHandler() {
-      this.count++
-      this.$emit("CountChanged", this.count)
-      this.ButHover()
+      if (!this.started) {
+        this.started = true
+        this.ButHover()
+      } else {
+        this.count++
+        this.$emit("CountChanged", this.count)
+        this.ButHover()
+      }
     },
     ButHover() {
       console.log("got hover info")
