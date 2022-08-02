@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button :style="`top: ${ GetTop }; left: ${ GetLeft }; transform: ${GetVisible ? 'translate(-50%, -50%)' : 'translate(0%,0%)'}`" @mouseover='ButHover()'></button>
+    <button :style="`top: ${ GetTop }; left: ${ GetLeft }; transform: ${ GetVisible }`" @mouseover='TimeOutHandler()'></button>
   </div>
 </template>
 
@@ -12,13 +12,24 @@ export default {
     return {
       top: "50%",
       left: "50%",
-      visible: true
+      visible: true,
+      Timeout: null
     }
 },
   methods: {
+    TimeOutHandler() {
+      if (this.Timeout != null) {
+        return
+      }
+      const RandomTime = Math.floor((Math.random() * 3) - 1)
+      this.Timeout = setTimeout(this.ButHover, RandomTime * 100);
+    },
     ButHover() {
+      if (this.Timeout != null) {
+        clearTimeout(this.Timeout);
+        this.Timeout = null
+      }
       console.log("hover");
-
       const RandomX = (Math.floor(Math.random() * window.innerWidth) / 1.2) + "px"
       const RandomY = (Math.floor(Math.random() * window.innerHeight) / 1.2) + "px"
       this.left = RandomX
@@ -27,7 +38,7 @@ export default {
       console.log(this.left)
       console.log(this.top)
       this.$emit("Hovered")
-    }
+    },
   },
   computed: {
     GetTop() {
@@ -37,10 +48,9 @@ export default {
         return this.left
     },
     GetVisible() {
-      console.log(this.visible)
-
-      console.log(this.visible ? 'translate(50%,-50%)' : 'translate(0%,0%)' )
-      return this.visible
+      if (!this.visible) {
+        return "translate(0%,0%)"
+      } else return "translate(-50%, -50%)"
     }
   }
 }
@@ -52,6 +62,10 @@ button {
   position: absolute;
   width: 200px;
   height: 100px;
+  background-color: #e7e7e7; color: black;
+  border-radius: 8px;
+  border-color: aliceblue;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;

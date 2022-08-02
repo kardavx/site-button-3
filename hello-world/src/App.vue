@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <span v-show='visible' style="font-family:Arial">A site where you click a button that constantly moves and you cant really click it</span>
+    <span v-show='visible' style="font-family:Arial">A WEBSITE WHERE YOU CLICK A BUTTON THAT CONSTANTLY MOVES AND YOU CANT REALLY CLICK IT</span>
+    <counter v-show='!visible' style="font-family:Arial">00</counter>
     <Button @Hovered="HandleButHover()"></Button>
   </div>
 </template>
@@ -12,7 +13,10 @@ import Button from './components/HelloWorld.vue'
 export default {
   name: 'App',
   components: {
-    Button
+    Button,
+  },
+  created() {
+    document.title = "cant click this"
   },
   data: () => ({
       visible: true
@@ -30,6 +34,24 @@ export default {
 #app {
   position: center;
 }
+
+counter {
+  text-align: center;
+  white-space: nowrap;
+  font-size: 45vw;
+  opacity: 0.05;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top: 50%;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
 span {
   width: 600px;
   height: 100px;
@@ -39,6 +61,12 @@ span {
   transform: translate(-50%,-100%);
   left: 50%;
   top: 100%;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
 </style>
