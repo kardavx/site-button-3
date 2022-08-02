@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@syncfusion/ej2-vue-buttons": "^20.2.38",
+    "vue": "^3.2.37"
+  }
+}
