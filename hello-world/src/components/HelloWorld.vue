@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @mouseover='ButHover()'></button>
+    <button :style="`top: ${ GetTop }; left: ${ GetLeft }; transform: ${GetVisible ? 'translate(-50%, -50%)' : 'translate(0%,0%)'}`" @mouseover='ButHover()'></button>
   </div>
 </template>
 
@@ -8,19 +8,40 @@
 
 export default {
   name: 'HelloWorld',
+  data() {
+    return {
+      top: "50%",
+      left: "50%",
+      visible: true
+    }
+},
   methods: {
     ButHover() {
-      let i = Math.floor(Math.random() * window.innerWidth) + 1;
-      let j = Math.floor(Math.random() * window.innerHeight) + 1;
-      this.style.left = i + "px";
-      this.style.top = j + "px";
+      console.log("hover");
+
+      const RandomX = (Math.floor(Math.random() * window.innerWidth) / 1.2) + "px"
+      const RandomY = (Math.floor(Math.random() * window.innerHeight) / 1.2) + "px"
+      this.left = RandomX
+      this.top = RandomY
+      this.visible = false
+      console.log(this.left)
+      console.log(this.top)
       this.$emit("Hovered")
     }
   },
   computed: {
-    leftpos = function() {
-
+    GetTop() {
+        return this.top
     },
+    GetLeft() {
+        return this.left
+    },
+    GetVisible() {
+      console.log(this.visible)
+
+      console.log(this.visible ? 'translate(50%,-50%)' : 'translate(0%,0%)' )
+      return this.visible
+    }
   }
 }
 </script>
@@ -29,11 +50,10 @@ export default {
 
 button {
   position: absolute;
-  width: 400px;
-  height: 200px;
-  transform: translate(-50%,-50%);
+  width: 200px;
+  height: 100px;
+  transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
 }
-
 </style>
