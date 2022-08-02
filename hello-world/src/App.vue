@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <span v-show='visible' style="font-family:Arial">A WEBSITE WHERE YOU CLICK A BUTTON THAT CONSTANTLY MOVES AND YOU CANT REALLY CLICK IT</span>
-    <counter v-show='!visible' style="font-family:Arial">00</counter>
-    <Button @Hovered="HandleButHover()"></Button>
+    <span id="misc"  v-show='visible' style="font-family:Arial">A WEBSITE WHERE YOU CLICK A BUTTON THAT CONSTANTLY MOVES AND YOU CANT REALLY CLICK IT</span>
+    <span id="counter" v-show='!visible' style="font-family:Arial">{{ GetCount }}</span>
+    <Button @Hovered="HandleButHover()" @CountChanged="HandleCountChange($event)"></Button>
   </div>
 </template>
 
@@ -19,11 +19,23 @@ export default {
     document.title = "cant click this"
   },
   data: () => ({
-      visible: true
+      visible: true,
+      count: 0
   }),
   methods: {
     HandleButHover() {
       this.visible = false
+    },
+    HandleCountChange(CurrCount) {
+      console.log("Count Change Parsed")
+      localStorage.setItem("PlayerCount", CurrCount)
+      this.count = CurrCount
+      console.log(this.count)
+    }
+  },
+  computed: {
+    GetCount() {
+      return this.count
     }
   }
 }
@@ -35,7 +47,7 @@ export default {
   position: center;
 }
 
-counter {
+#counter {
   text-align: center;
   white-space: nowrap;
   font-size: 45vw;
@@ -52,7 +64,7 @@ counter {
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
-span {
+#misc {
   width: 600px;
   height: 100px;
   text-align: center;

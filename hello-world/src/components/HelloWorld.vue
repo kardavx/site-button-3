@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button :style="`top: ${ GetTop }; left: ${ GetLeft }; transform: ${ GetVisible }`" @mouseover='TimeOutHandler()'></button>
+    <button :style="`top: ${ GetTop }; left: ${ GetLeft }; transform: ${ GetVisible }`" @click='ClickHandler()' @mouseover='TimeOutHandler()'></button>
   </div>
 </template>
 
@@ -13,18 +13,32 @@ export default {
       top: "50%",
       left: "50%",
       visible: true,
+      count: 0,
       Timeout: null
     }
 },
+  created() {
+    const Storage = localStorage.getItem("PlayerCount")
+    if (Storage) {
+      this.count = Storage
+      this.$emit("CountChanged", Storage)
+    }
+  },
   methods: {
     TimeOutHandler() {
       if (this.Timeout != null) {
         return
       }
-      const RandomTime = Math.floor((Math.random() * 3) - 1)
+      const RandomTime = Math.floor((Math.random() * 5) - 1)
       this.Timeout = setTimeout(this.ButHover, RandomTime * 100);
     },
+    ClickHandler() {
+      this.count++
+      this.$emit("CountChanged", this.count)
+      this.ButHover()
+    },
     ButHover() {
+      console.log("got hover info")
       if (this.Timeout != null) {
         clearTimeout(this.Timeout);
         this.Timeout = null
