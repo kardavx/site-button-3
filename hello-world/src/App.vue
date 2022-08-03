@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <span id="misc"  v-show='visible' style="font-family:Arial">A WEBSITE WHERE YOU CLICK A BUTTON THAT CONSTANTLY MOVES AND YOU CANT REALLY CLICK IT</span>
-    <span id="counter" v-show='!visible' style="font-family:Arial">{{ GetCount }}</span>
+    <span id="counter" v-show='!visible' :style="`font-family: ${ 'Arial' }; font-size: ${ GetSize }`">{{ GetCount }}</span>
     <Button @Hovered="HandleButHover()" @CountChanged="HandleCountChange($event)"></Button>
   </div>
 </template>
@@ -36,6 +36,12 @@ export default {
   computed: {
     GetCount() {
       return this.count
+    },
+    GetSize() {
+      if (this.count >= 1000) {
+        return 38 + "vw"
+      }
+      return 45 + "vw"
     }
   }
 }
