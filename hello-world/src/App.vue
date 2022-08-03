@@ -70,6 +70,7 @@ export default {
   text-align: center;
   font-size: large;
   position: absolute;
+  opacity: 0.5;
   transform: translate(-50%,-100%);
   left: 50%;
   top: 100%;
